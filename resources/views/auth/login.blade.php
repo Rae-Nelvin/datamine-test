@@ -40,7 +40,7 @@
 
             <div class="flex flex-col gap-3 md:gap-4">
                 <button type="submit" id="submitButton" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl py-2 md:py-3 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
-                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Login</button>
+                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Login</button>
                 <h5 class="text-center text-sm md:text-lg">Don't Have an Account? <a href="{{ route('register') }}" class="text-blue-600 font-medium hover:text-blue-800 hover:cursor-pointer transition-color
                     duration-300 ease-in-out">Register</a></h5>
             </div>

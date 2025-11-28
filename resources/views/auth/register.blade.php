@@ -31,12 +31,12 @@
                 <div class="flex flex-col gap-1 md:gap-2">
                     <label htmlFor="EMAIL" class="text-base md:text-lg lg:text-xl font-semibold">Email <span class="text-red-600">*</span></label>
                     <input type="email" name="EMAIL" id="EMAIL" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Email" required/>
-                    <span id="EMAIL_ERROR" class="text-red-600 text-sm hidden"></span>
+                    <span id="EMAIL_ERROR" class="text-red-600 text-xs md:text-sm hidden"></span>
                 </div>
                 <div class="flex flex-col gap-1 md:gap-2">
                     <label htmlFor="PHONE" class="text-base md:text-lg lg:text-xl font-semibold">Phone Number</label>
                     <input type="tel" name="PHONE" id="PHONE" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Phone Number (Ex: 628)"/>
-                    <span id="PHONE_ERROR" class="text-red-600 text-sm hidden"></span>
+                    <span id="PHONE_ERROR" class="text-red-600 text-xs md:text-sm hidden"></span>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -53,7 +53,7 @@
                             </svg>
                         </button>
                     </div>
-                    <span id="PASSWORD_ERROR" class="text-red-600 text-sm hidden"></span>
+                    <span id="PASSWORD_ERROR" class="text-red-600 text-xs md:text-sm hidden"></span>
                 </div>
                 <div class="flex flex-col gap-1 md:gap-2">
                     <label htmlFor="PASSWORD_CONFIRMATION" class="text-base md:text-lg lg:text-xl font-semibold">Password Confirmation <span class="text-red-600">*</span></label>
@@ -68,13 +68,13 @@
                             </svg>
                         </button>
                     </div>
-                    <span id="PASSWORD_CONFIRMATION_ERROR" class="text-red-600 text-sm hidden"></span>
+                    <span id="PASSWORD_CONFIRMATION_ERROR" class="text-red-600 text-xs md:text-sm hidden"></span>
                 </div>
             </div>
 
             <div class="flex flex-col gap-3 md:gap-4 mt-12 md:mt-0">
                 <button type="submit" id="submitButton" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl py-2 md:py-3 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
-                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Register Now</button>
+                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Register Now</button>
                 <h5 class="text-center text-sm md:text-base lg:text-lg">Already Have an Account? <a href="{{ route('login') }}" class="text-blue-600 font-medium hover:text-blue-800 hover:cursor-pointer transition-color
                     duration-300 ease-in-out">Log In</a></h5>
             </div>
