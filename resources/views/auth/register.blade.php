@@ -1,15 +1,15 @@
 @extends('layout')
 
 @section('content')
-    <div class="w-full min-h-screen flex flex-col items-center justify-center">
-        <h1 class="font-bold text-center text-5xl">DATAMINE Tasks Management System</h1>
+    <div class="w-full min-h-screen flex flex-col items-center justify-center px-4 md:px-0">
+        <h1 class="font-bold text-center text-3xl md:text-4xl lg:text-5xl">DATAMINE Tasks Management System</h1>
 
-        <form method="POST" action="{{ route('register.attempt') }}" class="w-1/3 flex flex-col rounded-xl shadow-lg border mt-20 p-8 gap-10">
+        <form method="POST" action="{{ route('register.attempt') }}" class="w-full max-w-sm md:max-w-md lg:max-w-xl flex flex-col rounded-xl shadow-lg border mt-12 md:mt-16 lg:mt-20 p-6 md:p-8 gap-2 md:gap-8 lg:gap-10">
             @csrf
             @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold text-2xl">Error!</strong>
-                    <ul class="mt-2 list-disc list-inside">
+                <div class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 md:px-4 md:py-3 rounded relative text-sm md:text-base" role="alert">
+                    <strong class="font-bold md:text-xl">Error!</strong>
+                    <ul class="mt-1 md:mt-2 list-disc list-inside text-xs md:text-sm">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -17,33 +17,33 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="FIRST_NAME" class="text-xl font-semibold">First Name <span class="text-red-600">*</span></label>
-                    <input type="text" name="FIRST_NAME" class="p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your First Name" required/>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="FIRST_NAME" class="text-base md:text-lg lg:text-xl font-semibold">First Name <span class="text-red-600">*</span></label>
+                    <input type="text" name="FIRST_NAME" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your First Name" required/>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="LAST_NAME" class="text-xl font-semibold">Last Name</label>
-                    <input type="text" name="LAST_NAME" class="p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Last Name"/>
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="LAST_NAME" class="text-base md:text-lg lg:text-xl font-semibold">Last Name</label>
+                    <input type="text" name="LAST_NAME" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Last Name"/>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="EMAIL" class="text-xl font-semibold">Email <span class="text-red-600">*</span></label>
-                    <input type="email" name="EMAIL" id="EMAIL" class="p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Email" required/>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="EMAIL" class="text-base md:text-lg lg:text-xl font-semibold">Email <span class="text-red-600">*</span></label>
+                    <input type="email" name="EMAIL" id="EMAIL" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Email" required/>
                     <span id="EMAIL_ERROR" class="text-red-600 text-sm hidden"></span>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="PHONE" class="text-xl font-semibold">Phone Number</label>
-                    <input type="tel" name="PHONE" id="PHONE" class="p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Phone Number (Ex: 628)"/>
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="PHONE" class="text-base md:text-lg lg:text-xl font-semibold">Phone Number</label>
+                    <input type="tel" name="PHONE" id="PHONE" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Phone Number (Ex: 628)"/>
                     <span id="PHONE_ERROR" class="text-red-600 text-sm hidden"></span>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="PASSWORD" class="text-xl font-semibold">Password <span class="text-red-600">*</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="PASSWORD" class="text-base md:text-lg lg:text-xl font-semibold">Password <span class="text-red-600">*</span></label>
                     <div class="relative">
-                        <input type="password" name="PASSWORD" id="PASSWORD" class="w-full p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Password" required/>
+                        <input type="password" name="PASSWORD" id="PASSWORD" class="w-full p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Input Your Password" required/>
                         <button type="button" tabindex="-1" onclick="togglePassword('PASSWORD', this)" class="absolute inset-y-0 right-3 flex items-center text-gray-5500 hover:text-gray-800 hover:cursor-pointer">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -55,10 +55,10 @@
                     </div>
                     <span id="PASSWORD_ERROR" class="text-red-600 text-sm hidden"></span>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label htmlFor="PASSWORD_CONFIRMATION" class="text-xl font-semibold">Password Confirmation <span class="text-red-600">*</span></label>
+                <div class="flex flex-col gap-1 md:gap-2">
+                    <label htmlFor="PASSWORD_CONFIRMATION" class="text-base md:text-lg lg:text-xl font-semibold">Password Confirmation <span class="text-red-600">*</span></label>
                     <div class="relative">
-                        <input type="password" name="PASSWORD_CONFIRMATION" id="PASSWORD_CONFIRMATION" class="w-full p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Re-type Your Password" required/>
+                        <input type="password" name="PASSWORD_CONFIRMATION" id="PASSWORD_CONFIRMATION" class="w-full p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" placeholder="Please Re-type Your Password" required/>
                         <button type="button" tabindex="-1" onclick="togglePassword('PASSWORD_CONFIRMATION', this)" class="absolute inset-y-0 right-3 flex items-center text-gray-5500 hover:text-gray-800 hover:cursor-pointer">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -72,9 +72,11 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-4">
-                <button type="submit" id="submitButton" class="bg-black text-white rounded-lg font-semibold text-2xl py-2 hover:cursor-pointer hover:bg-black/80 transition-color duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Register Now</button>
-                <h5 class="text-center text-lg">Already Have an Account? <a href="{{ route('login') }}" class="text-blue-600 font-medium hover:text-blue-800 hover:cursor-pointer transition-color duration-300 ease-in-out">Log In</a></h5>
+            <div class="flex flex-col gap-3 md:gap-4 mt-12 md:mt-0">
+                <button type="submit" id="submitButton" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl py-2 md:py-3 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
+                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Register Now</button>
+                <h5 class="text-center text-sm md:text-base lg:text-lg">Already Have an Account? <a href="{{ route('login') }}" class="text-blue-600 font-medium hover:text-blue-800 hover:cursor-pointer transition-color
+                    duration-300 ease-in-out">Log In</a></h5>
             </div>
         </form>
     </div>
