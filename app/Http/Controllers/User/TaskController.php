@@ -11,7 +11,7 @@ class TaskController
     public function index()
     {
         $users = User::all();
-        $tasks = Task::with(["creator", "assignee", "status"])->get();
+        $tasks = Task::orderBy("created_at", "desc")->with(["creator", "assignee", "status"])->simplePaginate(10);
 
         return view("user.tasks", compact("users", "tasks"));
     }

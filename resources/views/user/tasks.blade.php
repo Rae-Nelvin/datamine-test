@@ -111,8 +111,11 @@
                 @endforeach
             </div>
 
-        @endif
+            <div class="flex flex-row justify-center">
+                {{ $tasks->links() }}
+            </div>
 
+        @endif
     </div>
 
     <div id="taskModal" class="fixed inset-0 z-50 items-center justify-center bg-black/50 flex flex-col hidden">
@@ -266,12 +269,14 @@
             modalForm.querySelectorAll("input, textarea, select").forEach(element => element.readOnly = true);
             closeButton.disabled = true;
             submitButton.disabled = true;
+            submitButton.textContent = "Processing...";
         }
 
         function unlockModal() {
             modalForm.querySelectorAll("input, textarea, select").forEach(element => element.readOnly = false);
             closeButton.disabled = false;
             submitButton.disabled = false;
+            submitButton.textContent = buttonText.textContent;
         }
 
         openButton.addEventListener("click", show);
