@@ -27,7 +27,7 @@
                 </ul>
             </div>
 
-            <form method="POST" action="" class="p-4 lg:p-8">
+            <form method="POST" action="{{ route('logout') }}" class="p-4 lg:p-8">
                 @csrf
                 <button class="w-full bg-red-400 py-2 lg:py-3 lg:text-2xl rounded-lg text-white font-semibold uppercase hover:cursor-pointer hover:bg-red-600 focus:ring-2 focus:ring-red-800 transition-colors duration-300 ease-in-out">
                     Logout

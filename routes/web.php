@@ -15,6 +15,8 @@ Route::middleware("web")->group(function () {
     Route::middleware("auth")->group(function () {
         Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
     });
+
+    Route::post("/logout", [AuthController::class, "destroy"])->name("logout");
 });
 
 Route::fallback(FallbackController::class);
