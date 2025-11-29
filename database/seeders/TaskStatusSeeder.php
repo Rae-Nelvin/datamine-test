@@ -27,5 +27,9 @@ class TaskStatusSeeder extends Seeder
         TaskStatus::create([
             "name" => "Completed",
         ]);
+
+        TaskStatus::create([
+            "name" => "Completed Overdue",
+        ]);
     }
 }

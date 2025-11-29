@@ -34,6 +34,16 @@ class Task extends Model
         return $this->hasOne(TaskStatus::class, "id", "status_id");
     }
 
+    public function comments()
+    {
+        return $this->hasMany(TaskComment::class, "task_id")->orderBy("created_at", "desc");
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(TaskHistory::class, "task_id")->orderBy("created_at", "desc");
+    }
+
     protected $casts = [
         "deadline" => "datetime",
         "created_at" => "datetime",

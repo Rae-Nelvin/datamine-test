@@ -13,4 +13,14 @@ class TaskHistory extends Model
         "old_value",
         "new_value",
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class, "task_id");
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "changed_by");
+    }
 }

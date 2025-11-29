@@ -37,11 +37,15 @@
                     <tbody>
                         @foreach ($tasks as $task)
                             <tr class="border-t border-gray-200 hover:bg-gray-50">
-                                <td class="px-4 py-2 border-r border-gray-300 hover:cursor-pointer font-semibold text-blue-600 hover:underline">{{ $task->title }}</td>
+                                <td class="px-4 py-2 border-r border-gray-300 hover:cursor-pointer font-semibold text-blue-600 hover:underline">
+                                    <a href="{{ route('tasks.detail', $task) }}">{{ $task->title }}</a>
+                                </td>
                                 @if ($task->status->name === "In Progress")
                                     <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-yellow-200 rounded-full px-4 font-medium">{{ $task->status->name }}</span></td>
-                                @elseif ($task->deadline->isPast())
+                                @elseif ($task->deadline->isPast() && $task->status->name !== "Completed Overdue")
                                     <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4 font-medium">Overdue</span></td>
+                                @elseif ($task->status->name === "Completed Overdue")
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4 font-medium">Completed Overdue</span></td>
                                 @elseif ($task->status->name === "Completed")
                                     <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-green-200 rounded-full px-4 font-medium">{{ $task->status->name }}</span></td>
                                 @else
@@ -81,8 +85,10 @@
                             <span class="font-semibold text-base">{{ $task->title }}</span>
                             @if ($task->status->name === "In Progress")
                                 <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-yellow-200 rounded-full px-4">{{ $task->status->name }}</span></td>
-                            @elseif ($task->deadline->isPast())
+                            @elseif ($task->deadline->isPast() && $task->status->name !== "Completed Overdue")
                                 <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Overdue</span></td>
+                            @elseif ($task->status->name === "Completed Overdue")
+                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Completed Overdue</span></td>
                             @elseif ($task->status->name === "Completed")
                                 <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-green-200 rounded-full px-4">{{ $task->status->name }}</span></td>
                             @else
