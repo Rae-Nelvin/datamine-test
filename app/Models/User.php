@@ -17,11 +17,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        "FIRST_NAME",
-        "LAST_NAME",
-        "EMAIL",
-        "PHONE",
-        "PASSWORD",
+        "first_name",
+        "last_name",
+        "email",
+        "phone",
+        "password",
     ];
 
     /**
@@ -30,18 +30,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'PASSWORD',
+        'password',
     ];
-
-    public function getAuthIdentifierName()
-    {
-        return "EMAIL";
-    }
-
-    public function getAuthPassword()
-    {
-        return $this->PASSWORD;
-    }
 
     /**
      * Get the attributes that should be cast.
@@ -51,7 +41,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'PASSWORD' => 'hashed',
+            'password' => 'hashed',
         ];
     }
 }

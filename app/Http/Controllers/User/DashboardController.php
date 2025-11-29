@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-
 class DashboardController
 {
     public function index()
