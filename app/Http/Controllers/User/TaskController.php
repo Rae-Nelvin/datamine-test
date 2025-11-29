@@ -70,9 +70,6 @@ class TaskController
     {
         $task->delete();
 
-        return response()->json([
-            "success" => true,
-            "message" => "Task deleted successfully."
-        ]);
+        return redirect()->route("tasks.index");
     }
 }

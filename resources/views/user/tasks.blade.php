@@ -58,7 +58,7 @@
                                             data-assignee="{{ $task->assignee_id }}"
                                             class="edit-btn bg-yellow-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-yellow-400 transition-color duration-300
                     ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
-                                        <form action="" method="POST" class="inline" onsubmit="return confirm('Delete this task?');">
+                                        <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline" onsubmit="return confirm('Delete this task?');">
                                             @csrf @method("DELETE")
                                             <button type="submit" class="bg-red-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-red-400 transition-color duration-300
                     ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
@@ -101,7 +101,7 @@
                                     data-deadline="{{ $task->deadline->format('Y-m-d\TH:i') }}"
                                     data-assignee="{{ $task->assignee_id }}"
                                     class="edit-btn flex-1 text-center rounded-md px-3 py-2 text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
-                                <form method="POST" action="" class="flex-1" onsubmit="return confirm('Delete this task?');">
+                                <form method="POST" action="{{ route('tasks.destroy', $task ) }}" class="flex-1" onsubmit="return confirm('Delete this task?');">
                                     @csrf @method("DELETE")
                                     <button type="submit" class="w-full rounded-md px-3 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
                                 </form>
@@ -226,7 +226,6 @@
         }
 
         function showEdit(task) {
-            console.log(task.dataset);
             const data = task.dataset;
             taskId.value = data.id;
             methodInput.value = "PUT";
