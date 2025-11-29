@@ -20,13 +20,22 @@ class TaskController
         }
 
         $users = User::all();
-        $tasks = $query->orderBy("created_at", "desc")->with(["creator", "assignee", "status"])->paginate(10)->withQueryString();
+        $tasks = $query->orderBy("created_at", "desc")
+            ->where("assignee_id", auth()->id())
+            ->orWhere("creator_id", auth()->id())
+            ->with(["creator", "assignee", "status"])
+            ->paginate(10)
+            ->withQueryString();
 
         return view("user.tasks", compact("users", "tasks"));
     }
 
     public function detail(Task $task)
     {
+        if ($task->assignee_id !== auth()->id() && $task->creator_id !== auth()->id()) {
+            return redirect()->route("tasks.index");
+        }
+
         return view("user.task_detail", compact("task"));
     }
 
