@@ -8,10 +8,18 @@ use Illuminate\Http\Request;
 
 class TaskController
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input("SEARCH");
+        $query = Task::query();
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where("title", "like", "%" . $search . "%");
+            });
+        }
+
         $users = User::all();
-        $tasks = Task::orderBy("created_at", "desc")->with(["creator", "assignee", "status"])->simplePaginate(10);
+        $tasks = $query->orderBy("created_at", "desc")->with(["creator", "assignee", "status"])->paginate(10)->withQueryString();
 
         return view("user.tasks", compact("users", "tasks"));
     }

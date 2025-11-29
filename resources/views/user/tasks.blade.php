@@ -6,11 +6,14 @@
             <button type="button" id="openModalButton" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl px-8 py-2 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
                 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">+ Add New Tasks</button>
 
-            <form class="flex-grow flex flex-col sm:flex-row gap-3 sm:gap-4">
-                @csrf
-                <input type="text" name="SEARCH" placeholder="Search Tasks by Name" class="border border-gray-300 focus:outline-2 focus:outline-blue-400 focus:border-blue-500 w-full md:w-1/2 py-2 px-4 rounded-md"/>
+            <form method="GET" action="{{ route('tasks.index') }}" class="flex-grow flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <input type="text" name="SEARCH" placeholder="Search Tasks by Name" class="border border-gray-300 focus:outline-2 focus:outline-blue-400 focus:border-blue-500 w-full md:w-1/2 py-2 px-4 rounded-md" value="{{ request('SEARCH') }}"/>
                 <button type="submit" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl px-8 py-2 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
                 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Search</button>
+                @if (request()->has('SEARCH') && request()->get('SEARCH') !== '')
+                    <a href="{{ route('tasks.index') }}" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl px-8 py-2 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
+                ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Clear Search</a>
+                @endif
             </form>
         </div>
 
