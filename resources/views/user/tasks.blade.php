@@ -48,15 +48,23 @@
                                 <td class="px-4 py-2 border-r border-gray-300">{{ $task->assignee->first_name . ' ' . $task->assignee->last_name }}</td>
                                 <td class="px-4 py-2 border-r border-gray-300">{{ $task->creator->first_name . ' ' . $task->creator->last_name }}</td>
                                 <td class="px-4 py-2 border-r border-gray-300">{{ $task->created_at->format("d M Y H:i") }}</td>
-                                <td class="flex flex-row gap-4 justify-center py-2">
-                                    <button class="bg-yellow-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-yellow-400 transition-color duration-300
-                ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
-                                    <form action="" method="POST" class="inline" onsubmit="return confirm('Delete this task?');">
-                                        @csrf @method("DELETE")
-                                        <button type="submit" class="bg-red-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-red-400 transition-color duration-300
-                ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
-                                    </form>
-                                </td>
+                                @if ($task->creator->id === auth()->id())
+                                    <td class="flex flex-row gap-4 justify-center py-2">
+                                        <button
+                                            data-id="{{ $task->id }}"
+                                            data-title="{{ $task->title }}"
+                                            data-description="{{ $task->description }}"
+                                            data-deadline="{{ $task->deadline->format('Y-m-d\TH:i') }}"
+                                            data-assignee="{{ $task->assignee_id }}"
+                                            class="edit-btn bg-yellow-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-yellow-400 transition-color duration-300
+                    ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
+                                        <form action="" method="POST" class="inline" onsubmit="return confirm('Delete this task?');">
+                                            @csrf @method("DELETE")
+                                            <button type="submit" class="bg-red-500 text-white rounded-lg font-semibold text-lg px-8 py-1 hover:cursor-pointer hover:bg-red-400 transition-color duration-300
+                    ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -84,14 +92,21 @@
                             <div>Creator: <span class="font-medium">{{ $task->creator->first_name . ' ' . $task->creator->last_name }}</span></div>
                             <div>Created: <span class="font-medium">{{ $task->created_at }}</span></div>
                         </div>
-                        <div class="mt-3 flex gap-2">
-                            <button class="flex-1 text-center rounded-md px-3 py-2 text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
-                            <form method="POST" action="" class="flex-1" onsubmit="return confirm('Delete this task?');">
-                                @csrf @method("DELETE")
-                                <button type="submit" class="w-full rounded-md px-3 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
-                            </form>
-                        </div>
-
+                        @if ($task->creator->id === auth()->id())
+                             <div class="mt-3 flex gap-2">
+                                <button
+                                    data-id="{{ $task->id }}"
+                                    data-title="{{ $task->title }}"
+                                    data-description="{{ $task->description }}"
+                                    data-deadline="{{ $task->deadline->format('Y-m-d\TH:i') }}"
+                                    data-assignee="{{ $task->assignee_id }}"
+                                    class="edit-btn flex-1 text-center rounded-md px-3 py-2 text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
+                                <form method="POST" action="" class="flex-1" onsubmit="return confirm('Delete this task?');">
+                                    @csrf @method("DELETE")
+                                    <button type="submit" class="w-full rounded-md px-3 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             </div>
@@ -107,8 +122,11 @@
                 <button id="closeModalButton" class="text-gray-500 hover:text-black hover:cursor-pointer text-2xl">&times;</button>
             </div>
 
-            <form method="POST" action="{{ route('tasks.store') }}" class="flex flex-col gap-4" id="taskForm">
+            <form method="POST" class="flex flex-col gap-4" id="taskForm">
                 @csrf
+                <input type="hidden" name="_method" id="formMethod" value="POST" />
+                <input type="hidden" name="TASK_ID" id="taskId" value="" />
+
                 <div id="formErrorBanner" class="hidden bg-red-100 border border-red-400 text-red-700 px-3 py-2 md:px-4 md:py-3 rounded relative text-sm md:text-base" role="alert">
                     <strong class="font-bold md:text-xl">Error!</strong>
                     <ul id="formErrorList" class="mt-1 md:mt-2 list-disc list-inside text-xs md:text-sm"></ul>
@@ -116,11 +134,11 @@
 
                 <div class="flex flex-col gap-1">
                     <label for="TITLE" class="text-base md:text-lg lg:text-xl font-semibold">Task Title <span class="text-red-600">*</span></label>
-                    <input type="text" name="TITLE" placeholder="Please Input the Task Title" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" required />
+                    <input type="text" name="TITLE" id="TITLE" placeholder="Please Input the Task Title" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2" required />
                 </div>
                 <div class="flex flex-col gap-1">
                     <label for="DESCRIPTION" class="text-base md:text-lg lg:text-xl font-semibold">Task Description</label>
-                    <textarea name="DESCRIPTION" placeholder="Task Description" rows="3" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2"></textarea>
+                    <textarea name="DESCRIPTION" id="DESCRIPTION" placeholder="Task Description" rows="3" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2"></textarea>
                 </div>
                 <div class="flex flex-col gap-1">
                     <label for="DEADLINE" class="text-base md:text-lg lg:text-xl font-semibold">Task Deadline <span class="text-red-600">*</span></label>
@@ -128,7 +146,7 @@
                 </div>
                 <div class="flex flex-col gap-1">
                     <label for="ASSIGNEE" class="text-base md:text-lg lg:text-xl font-semibold">Task Assignee <span class="text-red-600">*</span></label>
-                    <select name="ASSIGNEE" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2">
+                    <select name="ASSIGNEE" id="ASSIGNEE" class="p-2 md:p-3 lg:p-1 rounded-md border focus:border-blue-500 focus:outline-blue-400 focus:outline-2">
                         <option value="">Choose Assignee</option>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</option>
@@ -137,7 +155,7 @@
                 </div>
 
                 <button type="submit" id="submitModalButton" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl py-2 md:py-3 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
-                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Create Task</button>
+                    ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400"><span id="buttonText">Create Task</span></button>
             </form>
         </div>
     </div>
@@ -150,6 +168,9 @@
         const closeButton = document.getElementById("closeModalButton");
         const submitButton = document.getElementById("submitModalButton");
         const deadlineInput = document.getElementById("DEADLINE");
+        const methodInput = document.getElementById("formMethod");
+        const taskId = document.getElementById("taskId");
+        const buttonText = document.getElementById("buttonText");
 
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 2, 0);
@@ -169,9 +190,12 @@
             clearErrors();
             lockModal();
             const data = new FormData(modalForm);
+            const id = taskId.value;
+            const url = id ? `{{ url('tasks') }}/${id}` : "{{ route('tasks.store') }}";
+            const method = id ? "PUT" : "POST";
 
             try {
-                const res = await fetch("{{ route('tasks.store') }}", {
+                const res = await fetch(url, {
                     method: "POST",
                     body: data,
                     headers: {'X-Requested-With': 'XMLHttpRequest'}
@@ -191,6 +215,28 @@
                 unlockModal();
             }
         });
+
+        function showCreate() {
+            taskId.value = "";
+            methodInput.value = "POST";
+            buttonText.textContent = "Create Task";
+            modalForm.reset();
+            deadlineInput.value = min;
+            show();
+        }
+
+        function showEdit(task) {
+            console.log(task.dataset);
+            const data = task.dataset;
+            taskId.value = data.id;
+            methodInput.value = "PUT";
+            buttonText.textContent = "Update Task";
+            document.getElementById("TITLE").value = data.title;
+            document.getElementById("DESCRIPTION").value = data.description;
+            document.getElementById("DEADLINE").value = data.deadline;
+            document.getElementById("ASSIGNEE").value = data.assignee;
+            show();
+        }
 
         function show() {
             modal.classList.remove("hidden");
@@ -235,6 +281,12 @@
         modal.addEventListener("click", function (event) {
             if (event.target === modal) hide();
         })
+
+        document.querySelectorAll(".edit-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                showEdit(this);
+            });
+        });
     });
     </script>
 @endsection
