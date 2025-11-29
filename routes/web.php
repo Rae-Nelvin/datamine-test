@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\TaskController;
 use App\Http\Controllers\Fallback\FallbackController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware("web")->group(function () {
@@ -14,6 +16,8 @@ Route::middleware("web")->group(function () {
 
     Route::middleware("auth")->group(function () {
         Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+        Route::get("/tasks", [TaskController::class, "index"])->name("tasks.index");
+        Route::post("/tasks", [TaskController::class, "store"])->name("tasks.store");
     });
 
     Route::post("/logout", [AuthController::class, "destroy"])->name("logout");
