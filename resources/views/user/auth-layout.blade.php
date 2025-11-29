@@ -17,7 +17,7 @@
                         Dashboard
                     </a>
                     <a href="{{ route('tasks.index') }}" class="p-3 lg:p-4 rounded-xl text-base lg:text-xl font-medium hover:bg-black hover:text-white transition-colors duration-300 ease-in-out hover:cursor-pointer
-                        {{ request()->routeIs('tasks.index') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
+                        {{ request()->routeIs('tasks.*') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
                         Tasks
                     </a>
                 </ul>
