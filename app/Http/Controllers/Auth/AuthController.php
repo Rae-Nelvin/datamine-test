@@ -29,22 +29,24 @@ class AuthController
             "PASSWORD" => ["required", "string", Password::default()]
         ]);
 
-        $key = "login|" . $request->ip() . "|" . $credentials["EMAIL"];
+        $credentials = [
+            "email" => $credentials["EMAIL"],
+            "password" => $credentials["PASSWORD"]
+        ];
+
+        $key = "login|" . $request->ip() . "|" . $credentials["email"];
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
 
             throw ValidationException::withMessages([
-                "EMAIL" => trans("auth.throttle", [
+                "email" => trans("auth.throttle", [
                     "seconds" => $seconds,
                     "minutes" => ceil($seconds / 60)
                 ])
             ])->status(429);
         }
 
-        if (Auth::attempt([
-            "EMAIL" => $credentials["EMAIL"],
-            "password" => $credentials["PASSWORD"]
-        ])) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             RateLimiter::clear($key);
 
@@ -53,7 +55,7 @@ class AuthController
 
         RateLimiter::hit($key, 60);
         throw ValidationException::withMessages([
-            "EMAIL" => [trans("auth.failed")]
+            "email" => [trans("auth.failed")]
         ]);
     }
 
@@ -69,11 +71,11 @@ class AuthController
         ]);
 
         $user = User::create([
-            "FIRST_NAME" => $data["FIRST_NAME"],
-            "LAST_NAME" => $data["LAST_NAME"],
-            "EMAIL" => $data["EMAIL"],
-            "PHONE" => $data["PHONE"],
-            "PASSWORD" => Hash::make($data["PASSWORD"])
+            "first_name" => $data["FIRST_NAME"],
+            "last_name" => $data["LAST_NAME"],
+            "email" => $data["EMAIL"],
+            "phone" => $data["PHONE"],
+            "password" => Hash::make($data["PASSWORD"])
         ]);
 
         Auth::login($user);

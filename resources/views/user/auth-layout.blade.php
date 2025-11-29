@@ -20,6 +20,10 @@
                         {{ request()->routeIs('notifications') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
                         Notifications
                     </a>
+                    <a href="" class="p-3 lg:p-4 rounded-xl text-base lg:text-xl font-medium hover:bg-black hover:text-white transition-colors duration-300 ease-in-out hover:cursor-pointer
+                        {{ request()->routeIs('tasks') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
+                        Tasks
+                    </a>
                 </ul>
             </div>
 

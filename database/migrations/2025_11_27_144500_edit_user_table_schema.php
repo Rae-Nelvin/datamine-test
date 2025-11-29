@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::table("users", function (Blueprint $table) {
             $table->dropColumn(["name", "email_verified_at", "remember_token"]);
 
-            $table->string("FIRST_NAME")->after("id");
-            $table->string("LAST_NAME")->nullable()->after("FIRST_NAME");
-            $table->renameColumn("email", "EMAIL");
-            $table->renameColumn("password", "PASSWORD");
-            $table->string("PHONE")->nullable()->after("EMAIL");
+            $table->string("first_name")->after("id");
+            $table->string("last_name")->nullable()->after("first_name");
+            $table->string("phone")->nullable()->after("email");
         });
     }
 
@@ -28,13 +26,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table("users", function (Blueprint $table) {
-            $table->dropColumn(["FIRST_NAME", "LAST_NAME", "PHONE"]);
+            $table->dropColumn(["first_name", "last_name", "phone"]);
 
             $table->string("name")->after("id");
-            $table->timestamp("email_verified_at")->nullable()->after("EMAIL");
-            $table->string("remember_token", 100)->nullable()->after("PASSWORD");
-            $table->renameColumn("EMAIL", "email");
-            $table->renameColumn("PASSWORD", "password");
+            $table->timestamp("email_verified_at")->nullable()->after("email");
+            $table->string("remember_token", 100)->nullable()->after("password");
         });
     }
 };
