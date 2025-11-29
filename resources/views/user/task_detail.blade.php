@@ -4,10 +4,10 @@
 <div class="max-w-5xl mx-auto px-4 py-6">
     <div class="flex flex-col gap-3 mb-6 md:flex-row md:items-start md:justify-between">
         <div>
-            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl md:text-4xl break-words">
+            <h1 class="text-4xl font-semibold text-gray-900 break-words">
                 {{ $task->title }}
             </h1>
-            <p class="mt-1 text-md text-gray-500">
+            <p class="mt-1 text-gray-500">
                 Task ID: #{{ $task->id }}
             </p>
         </div>
@@ -204,19 +204,19 @@
                 @forelse ($task->comments as $comment)
                     <article class="border-b border-gray-100 pb-3 last:border-0">
                         <header class="flex items-center justify-between gap-2 mb-1">
-                            <div class="text-lg font-semibold text-gray-800">
+                            <div class="text-base sm:text-lg font-semibold text-gray-800">
                                 {{ $comment->user->first_name . ' ' . $comment->user->last_name }}
                             </div>
                             <time class="text-md text-gray-500">
                                 {{ $comment->created_at->format('d M Y H:i') }}
                             </time>
                         </header>
-                        <p class="text-gray-800 break-words">
+                        <p class="text-md sm:text-base text-gray-800 break-words">
                             {{ $comment->comment }}
                         </p>
                     </article>
                 @empty
-                    <p class="text-sm text-gray-500 text-center">
+                    <p class="text-md text-gray-500 text-center">
                         No comments yet. Be the first to comment on this task.
                     </p>
                 @endforelse
@@ -232,14 +232,14 @@
                 @forelse ($task->histories as $history)
                     <div class="border-b border-gray-100 pb-3 last:border-0 text-sm text-gray-800">
                         <header class="flex items-center justify-between gap-2 mb-1">
-                            <div class="text-lg font-semibold text-gray-800">
+                            <div class="text-base md:text-lg font-semibold text-gray-800">
                                 Changed by #{{ $history->user->first_name . ' ' . $history->user->last_name }}
                             </div>
                             <h5 class="text-md text-gray-500">
                                 {{ $history->created_at->format('d M Y H:i') }}
                             </h5>
                         </header>
-                        <div class="space-y-1 text-sm text-gray-700">
+                        <div class="space-y-1 text-md md:text-base text-gray-700">
                             <div>
                                 <span class="font-semibold">Old:</span>
                                 <span class="break-words">{{ $history->old_value }}</span>
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="text-sm text-gray-500 text-center">
+                    <p class="text-md text-gray-500 text-center">
                         No history recorded for this task yet.
                     </p>
                 @endforelse
