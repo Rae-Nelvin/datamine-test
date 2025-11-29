@@ -12,7 +12,7 @@
                 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Search</button>
                 @if (request()->has('SEARCH') && request()->get('SEARCH') !== '')
                     <a href="{{ route('tasks.index') }}" class="bg-black text-white rounded-lg font-semibold text-lg md:text-xl lg:text-2xl px-8 py-2 hover:cursor-pointer hover:bg-black/80 transition-color duration-300
-                ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400">Clear Search</a>
+                ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-gray-400 text-center">Clear Search</a>
                 @endif
             </form>
         </div>
@@ -81,41 +81,43 @@
             <div class="md:hidden space-y-4">
                 @foreach ($tasks as $task)
                     <div class="border border-gray-300 rounded-lg p-4 bg-white shadow-sm">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="font-semibold text-base">{{ $task->title }}</span>
-                            @if ($task->status->name === "In Progress")
-                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-yellow-200 rounded-full px-4">{{ $task->status->name }}</span></td>
-                            @elseif ($task->deadline->isPast() && $task->status->name !== "Completed Overdue")
-                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Overdue</span></td>
-                            @elseif ($task->status->name === "Completed Overdue")
-                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Completed Overdue</span></td>
-                            @elseif ($task->status->name === "Completed")
-                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-green-200 rounded-full px-4">{{ $task->status->name }}</span></td>
-                            @else
-                                <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-blue-200 rounded-full px-4">{{ $task->status->name }}</span></td>
-                            @endif
-                        </div>
-                        <div class="text-sm text-gray-700 space-y-1">
-                            <div>Deadline: <span class="font-medium">{{ $task->deadline }}</span></div>
-                            <div>Assignee: <span class="font-medium">{{ $task->assignee->first_name . ' ' . $task->assignee->last_name }}</span></div>
-                            <div>Creator: <span class="font-medium">{{ $task->creator->first_name . ' ' . $task->creator->last_name }}</span></div>
-                            <div>Created: <span class="font-medium">{{ $task->created_at }}</span></div>
-                        </div>
-                        @if ($task->creator->id === auth()->id())
-                             <div class="mt-3 flex gap-2">
-                                <button
-                                    data-id="{{ $task->id }}"
-                                    data-title="{{ $task->title }}"
-                                    data-description="{{ $task->description }}"
-                                    data-deadline="{{ $task->deadline->format('Y-m-d\TH:i') }}"
-                                    data-assignee="{{ $task->assignee_id }}"
-                                    class="edit-btn flex-1 text-center rounded-md px-3 py-2 text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
-                                <form method="POST" action="{{ route('tasks.destroy', $task ) }}" class="flex-1" onsubmit="return confirm('Delete this task?');">
-                                    @csrf @method("DELETE")
-                                    <button type="submit" class="w-full rounded-md px-3 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
-                                </form>
+                        <a href="{{ route('tasks.detail', $task) }}">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-semibold text-lg text-blue-600">{{ $task->title }}</span>
+                                @if ($task->status->name === "In Progress")
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-yellow-200 rounded-full px-4">{{ $task->status->name }}</span></td>
+                                @elseif ($task->deadline->isPast() && $task->status->name !== "Completed Overdue")
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Overdue</span></td>
+                                @elseif ($task->status->name === "Completed Overdue")
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-red-200 rounded-full px-4">Completed Overdue</span></td>
+                                @elseif ($task->status->name === "Completed")
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-green-200 rounded-full px-4">{{ $task->status->name }}</span></td>
+                                @else
+                                    <td class="px-4 py-2 border-r border-gray-300 text-center"><span class="bg-blue-200 rounded-full px-4">{{ $task->status->name }}</span></td>
+                                @endif
                             </div>
-                        @endif
+                            <div class="text-sm text-gray-700 space-y-1">
+                                <div>Deadline: <span class="font-medium">{{ $task->deadline }}</span></div>
+                                <div>Assignee: <span class="font-medium">{{ $task->assignee->first_name . ' ' . $task->assignee->last_name }}</span></div>
+                                <div>Creator: <span class="font-medium">{{ $task->creator->first_name . ' ' . $task->creator->last_name }}</span></div>
+                                <div>Created: <span class="font-medium">{{ $task->created_at }}</span></div>
+                            </div>
+                            @if ($task->creator->id === auth()->id())
+                                 <div class="mt-3 flex gap-2">
+                                    <button
+                                        data-id="{{ $task->id }}"
+                                        data-title="{{ $task->title }}"
+                                        data-description="{{ $task->description }}"
+                                        data-deadline="{{ $task->deadline->format('Y-m-d\TH:i') }}"
+                                        data-assignee="{{ $task->assignee_id }}"
+                                        class="edit-btn flex-1 text-center rounded-md px-3 py-2 text-sm font-medium bg-yellow-500 text-white hover:bg-yellow-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-yellow-600">Edit</button>
+                                    <form method="POST" action="{{ route('tasks.destroy', $task ) }}" class="flex-1" onsubmit="return confirm('Delete this task?');">
+                                        @csrf @method("DELETE")
+                                        <button type="submit" class="w-full rounded-md px-3 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-400 transition-color duration-300 ease-in-out focus:ring-2 focus:ring-red-600">Delete</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </a>
                     </div>
                 @endforeach
             </div>
