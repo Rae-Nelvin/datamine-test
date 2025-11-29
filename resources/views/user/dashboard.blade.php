@@ -13,11 +13,19 @@
             @endif
         </div>
 
-        @foreach (["Ongoing", "Completed", "Overdue"] as $label)
-            <div class="border border-gray-300 rounded-lg p-4 md:p-5 lg:p-6 shadow-md flex flex-col gap-6 md:gap-10 lg:gap-20">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold">72</h1>
-                <h2 class="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold">{{ $label }} Tasks This Month</h2>
-            </div>
-        @endforeach
+        <div class="border border-gray-300 rounded-lg p-4 md:p-5 lg:p-6 shadow-md flex flex-col gap-6 md:gap-10 lg:gap-20">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold">{{ $ongoingTasks }}</h1>
+            <h2 class="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold">Ongoing Tasks This Month</h2>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-4 md:p-5 lg:p-6 shadow-md flex flex-col gap-6 md:gap-10 lg:gap-20">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold">{{ $completedTasks }}</h1>
+            <h2 class="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold">Completed Tasks This Month</h2>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-4 md:p-5 lg:p-6 shadow-md flex flex-col gap-6 md:gap-10 lg:gap-20">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold">{{ $overdueTasks }}</h1>
+            <h2 class="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold">Overdue Tasks This Month</h2>
+        </div>
     </div>
 @endsection
