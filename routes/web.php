@@ -21,7 +21,10 @@ Route::middleware("web")->group(function () {
         Route::post("/tasks", [TaskController::class, "store"])->name("tasks.store");
         Route::put("/tasks/{task}", [TaskController::class, "update"])->name("tasks.update");
         Route::delete("/tasks/{task}", [TaskController::class, "destroy"])->name("tasks.destroy");
-        Route::get("/tasks/{task}", [TaskController::class, "detail"])->name("tasks.detail");
+        Route::get("/tasks/{task}", [TaskController::class, "detail"])->name("tasks.detail")
+            ->missing(function () {
+                return redirect()->route("tasks.index");
+            });
         Route::patch("/tasks/{task}/start", [TaskController::class, "start"])->name("tasks.start");
         Route::patch("/tasks/{task}/pause", [TaskController::class, "pause"])->name("tasks.pause");
         Route::patch("/tasks/{task}/finish", [TaskController::class, "finish"])->name("tasks.finish");
