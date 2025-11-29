@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Task;
+
 class DashboardController
 {
     public function index()
@@ -34,6 +36,24 @@ class DashboardController
             session(["weather" => null]);
         }
 
-        return view("user.dashboard");
+        $ongoingTasks = Task::where("assignee_id", auth()->id())
+            ->whereIn("status_id", [1, 2, 3])
+            ->whereMonth("created_at", now()->month)
+            ->whereYear("created_at", now()->year)
+            ->count();
+
+        $completedTasks = Task::where("assignee_id", auth()->id())
+            ->whereIn("status_id", [4, 5])
+            ->whereMonth("created_at", now()->month)
+            ->whereYear("created_at", now()->year)
+            ->count();
+
+        $overdueTasks = Task::where("assignee_id", auth()->id())
+            ->where("deadline", "<", now())
+            ->whereMonth("created_at", now()->month)
+            ->whereYear("created_at", now()->year)
+            ->count();
+
+        return view("user.dashboard", compact("ongoingTasks", "completedTasks", "overdueTasks"));
     }
 }
