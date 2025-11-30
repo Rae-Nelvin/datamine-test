@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="flex h-screen">
+    <div class="flex min-h-screen h-full">
         <input type="checkbox" id="sidebar-toggle" class="peer hidden" />
         <aside class="fixed inset-y-0 left-0 z-40 w-64 md:w-72 lg:w-80 bg-gray-100 flex flex-col justify-between border-r border-gray-200 shadow-lg transform -translate-x-full peer-checked:translate-x-0 transition-transform
             duration-300 ease-in-out md:relative md:translate-x-0">
@@ -19,6 +19,10 @@
                     <a href="{{ route('tasks.index') }}" class="p-3 lg:p-4 rounded-xl text-base lg:text-xl font-medium hover:bg-black hover:text-white transition-colors duration-300 ease-in-out hover:cursor-pointer
                         {{ request()->routeIs('tasks.*') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
                         Tasks
+                    </a>
+                    <a href="{{ route('answers.index') }}" class="p-3 lg:p-4 rounded-xl text-base lg:text-xl font-medium hover:bg-black hover:text-white transition-colors duration-300 ease-in-out hover:cursor-pointer
+                        {{ request()->routeIs('answers.index') ? 'bg-black text-white' : 'bg-gray-200 border border-gray-300 shadow-sm' }}">
+                        Answers
                     </a>
                 </ul>
             </div>
