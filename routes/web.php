@@ -31,6 +31,9 @@ Route::middleware("web")->group(function () {
         Route::patch("/tasks/{task}/approve", [TaskController::class, "approve"])->name("tasks.approve");
         Route::patch("/tasks/{task}/reject", [TaskController::class, "reject"])->name("tasks.reject");
         Route::post("/tasks/{task}/comments", [TaskCommentController::class, "store"])->name("tasks.comments.store");
+        Route::get("/answers", function () {
+            return view("user.answers");
+        })->name("answers.index");
     });
 
     Route::post("/logout", [AuthController::class, "destroy"])->name("logout");
