@@ -38,8 +38,6 @@ class DashboardController
 
         $ongoingTasks = Task::where("assignee_id", auth()->id())
             ->whereIn("status_id", [1, 2, 3])
-            ->whereMonth("created_at", now()->month)
-            ->whereYear("created_at", now()->year)
             ->count();
 
         $completedTasks = Task::where("assignee_id", auth()->id())
